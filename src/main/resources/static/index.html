@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Last Wish Saver</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- TOASTS -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ============ AUTH VIEW ============ -->
+  <div id="auth-view" class="auth-view">
+    <div class="auth-card">
+      <h1 class="brand">Last Wish Saver</h1>
+      <p class="brand-sub">Your private legacy, kept safe.</p>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="login">Login</button>
+        <button class="tab-btn" data-tab="register">Register</button>
+      </div>
+
+      <form id="login-form" class="tab-panel active">
+
+        <label>
+          Login As
+          <select id="login-role">
+            <option value="OWNER">Owner</option>
+            <option value="BENEFICIARY">Beneficiary</option>
+          </select>
+        </label>
+
+        <label>
+          Email
+          <input id="login-email" type="email" required>
+        </label>
+
+        <label>
+          Password
+          <input id="login-password" type="password" required>
+        </label>
+
+        <button type="submit" class="btn-primary">
+          Login
+        </button>
+
+      </form>
+
+      <form id="register-form" class="tab-panel">
+        <label>Name
+          <input type="text" id="register-name" required />
+        </label>
+        <label>Email
+          <input type="email" id="register-email" required />
+        </label>
+        <label>Password
+          <input type="password" id="register-password" required />
+        </label>
+        <button type="submit" class="btn-primary">Create account</button>
+      </form>
+    </div>
+  </div>
+
+
+
+  <!-- ============ APP VIEW ============ -->
+  <div id="app-view" class="app-view hidden">
+    <aside class="sidebar">
+      <div class="brand-mini">Last Wish Saver</div>
+      <nav>
+        <a href="#/dashboard" data-nav="dashboard">Dashboard</a>
+        <a href="#/wishes" data-nav="wishes">My Wishes</a>
+        <a href="#/beneficiaries" data-nav="beneficiaries">Beneficiaries</a>
+        <a href="#/access" data-nav="access">Access Management</a>
+        <a href="#/verification" data-nav="verification">Verification</a>
+        <a href="#/audit" data-nav="audit">Audit Logs</a>
+      </nav>
+      <button id="logout-btn" class="btn-ghost logout-btn">Logout</button>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="page-title" id="page-title">Dashboard</div>
+        <div class="user-chip" id="user-chip"></div>
+      </header>
+
+      <!-- DASHBOARD -->
+      <section id="page-dashboard" class="page">
+        <div class="cards-row">
+          <div class="stat-card">
+            <div class="stat-label">Total Wishes</div>
+            <div class="stat-value" id="stat-wishes">–</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Beneficiaries</div>
+            <div class="stat-value" id="stat-beneficiaries">–</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Verification Requests</div>
+            <div class="stat-value" id="stat-verifications">–</div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Recent Activity</h3>
+          <table class="data-table">
+            <thead><tr><th>Type</th><th>Title</th><th>Date</th></tr></thead>
+            <tbody id="recent-activity-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- WISHES -->
+      <section id="page-wishes" class="page hidden">
+        <div class="panel">
+          <div class="panel-header">
+            <h3>Create Wish</h3>
+          </div>
+          <form id="wish-form" class="inline-form">
+            <input type="text" id="wish-title" placeholder="Title" required />
+            <input type="text" id="wish-content" placeholder="Content" required />
+            <button type="submit" class="btn-primary">Add Wish</button>
+          </form>
+        </div>
+        <div class="panel">
+          <h3>My Wishes</h3>
+          <table class="data-table">
+            <thead>
+              <tr><th>ID</th><th>Title</th><th>Content</th><th>Status</th><th>Created</th><th>Updated</th></tr>
+            </thead>
+            <tbody id="wishes-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- BENEFICIARIES -->
+      <section id="page-beneficiaries" class="page hidden">
+        <div class="panel">
+          <div class="panel-header"><h3>Add Beneficiary</h3></div>
+          <form id="beneficiary-form" class="inline-form">
+            <input type="text" id="ben-name" placeholder="Name" required />
+            <input type="email" id="ben-email" placeholder="Email" required />
+            <input type="text" id="ben-relationship" placeholder="Relationship" required />
+            <button type="submit" class="btn-primary">Add Beneficiary</button>
+          </form>
+        </div>
+        <div class="panel">
+          <h3>Beneficiaries</h3>
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Relationship</th></tr></thead>
+            <tbody id="beneficiaries-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ACCESS MANAGEMENT -->
+      <section id="page-access" class="page hidden">
+        <div class="panel">
+          <h3>Grant Access</h3>
+          <form id="access-form" class="inline-form">
+            <input type="text" id="access-wish-id" placeholder="Wish ID" required />
+            <input type="text" id="access-ben-id" placeholder="Beneficiary ID" required />
+            <select id="access-level" required></select>
+            <button type="submit" class="btn-primary">Grant Access</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- VERIFICATION -->
+      <section id="page-verification" class="page hidden">
+        <div class="panel">
+          <h3>Submit Verification Request</h3>
+          <form id="verification-form" class="inline-form">
+            <input type="text" id="ver-wish-id" placeholder="Wish ID" required />
+            <input type="text" id="ver-ben-id" placeholder="Beneficiary ID" required />
+            <input type="text" id="ver-note" placeholder="Note" required />
+            <button type="submit" class="btn-primary">Submit</button>
+          </form>
+        </div>
+        <div class="panel">
+          <h3>Verification Requests</h3>
+          <table class="data-table">
+            <thead>
+              <tr><th>Request ID</th><th>Wish</th><th>Beneficiary</th><th>Status</th><th>Note</th><th>Created</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="verifications-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- AUDIT LOGS -->
+      <section id="page-audit" class="page hidden">
+        <div class="panel">
+          <h3>Audit Logs</h3>
+          <form id="audit-form" class="inline-form">
+            <input type="text" id="audit-wish-id" placeholder="Wish ID" required />
+            <button type="submit" class="btn-primary">Load Logs</button>
+          </form>
+          <table class="data-table">
+            <thead><tr><th>Action</th><th>Entity</th><th>Details</th><th>Timestamp</th></tr></thead>
+            <tbody id="audit-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

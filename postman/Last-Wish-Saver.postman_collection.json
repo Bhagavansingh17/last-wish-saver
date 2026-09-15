@@ -1,0 +1,9 @@
+{
+  "info": {"name":"Last Wish Saver","schema":"https://schema.getpostman.com/json/collection/v2.1.0/collection.json"},
+  "variable":[{"key":"base","value":"http://localhost:8080"},{"key":"ownerToken","value":""},{"key":"beneficiaryToken","value":""}],
+  "item":[
+    {"name":"Register Owner","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"url":"{{base}}/api/auth/register","body":{"mode":"raw","raw":"{\"name\":\"Owner\",\"email\":\"owner@example.com\",\"password\":\"secret123\"}"}}},
+    {"name":"Create Wish","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{ownerToken}}"},{"key":"Content-Type","value":"application/json"}],"url":"{{base}}/api/wishes","body":{"mode":"raw","raw":"{\"title\":\"My final wishes\",\"content\":\"Please take care of the family documents.\"}"}}},
+    {"name":"List Wishes","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{ownerToken}}"}],"url":"{{base}}/api/wishes"}}
+  ]
+}
